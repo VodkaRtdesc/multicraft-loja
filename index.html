@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Multi Craft • Loja</title>
+<title>Multi Craft • Loja Oficial</title>
 <style>
 body{margin:0;font-family:Arial;background:#1e1e1e;color:#fff}
 header{background:#2b2b2b;padding:20px;text-align:center;font-size:28px}
@@ -26,39 +26,40 @@ footer{text-align:center;padding:20px;color:#aaa}
 
 <div class="container">
 
-<h2>VIP</h2>
+<h2>VIPs</h2>
 <div class="items">
-<div class="card">
-<h3>VIP</h3>
-<p class="price">R$ 10,00</p>
-<input id="nick-vip" placeholder="Nick do jogador">
-<button onclick="buy('VIP',10,'nick-vip')">Comprar via Pix</button>
-</div>
+  <div class="card">
+    <h3>VIP</h3>
+    <p class="price">R$ 10,00</p>
+    <input id="nick-vip" placeholder="Nick do jogador">
+    <button onclick="buy('VIP',10,'nick-vip')">Comprar via Pix</button>
+  </div>
 
-<div class="card">
-<h3>VIP+</h3>
-<p class="price">R$ 20,00</p>
-<input id="nick-vipplus" placeholder="Nick do jogador">
-<button onclick="buy('VIP+',20,'nick-vipplus')">Comprar via Pix</button>
-</div>
+  <div class="card">
+    <h3>VIP+</h3>
+    <p class="price">R$ 20,00</p>
+    <input id="nick-vipplus" placeholder="Nick do jogador">
+    <button onclick="buy('VIP+',20,'nick-vipplus')">Comprar via Pix</button>
+  </div>
 </div>
 
 <h2 style="margin-top:40px">Kits PvP</h2>
 <div class="items">
-<div class="card">
-<h3>Kit PvP Básico</h3>
-<p class="price">R$ 5,00</p>
-<input id="nick-kit1" placeholder="Nick do jogador">
-<button onclick="buy('Kit PvP Básico',5,'nick-kit1')">Comprar via Pix</button>
+  <div class="card">
+    <h3>Kit PvP Básico</h3>
+    <p class="price">R$ 5,00</p>
+    <input id="nick-kit1" placeholder="Nick do jogador">
+    <button onclick="buy('Kit PvP Básico',5,'nick-kit1')">Comprar via Pix</button>
+  </div>
+
+  <div class="card">
+    <h3>Kit PvP Pro</h3>
+    <p class="price">R$ 15,00</p>
+    <input id="nick-kit2" placeholder="Nick do jogador">
+    <button onclick="buy('Kit PvP Pro',15,'nick-kit2')">Comprar via Pix</button>
+  </div>
 </div>
 
-<div class="card">
-<h3>Kit PvP Pro</h3>
-<p class="price">R$ 15,00</p>
-<input id="nick-kit2" placeholder="Nick do jogador">
-<button onclick="buy('Kit PvP Pro',15,'nick-kit2')">Comprar via Pix</button>
-</div>
-</div>
 </div>
 
 <footer>
@@ -75,27 +76,27 @@ footer{text-align:center;padding:20px;color:#aaa}
 </div>
 
 <script>
-const ADMIN_PASSWORD = "MultiCraftStaff1"; // MUDE ISSO
+const ADMIN_PASSWORD = "MultiCraftStaff1"; // SUA SENHA
 const PIX_KEY = "10099770164";
 
 function buy(item, price, nickId){
   const nick = document.getElementById(nickId).value;
-  if(!nick){ alert("Digite seu nick"); return; }
+  if(!nick){ alert("Digite seu nick do Minecraft"); return; }
 
   const orders = JSON.parse(localStorage.getItem("orders") || "[]");
 
-  orders.push({
+  const order = {
+    id: Date.now(),
     item,
     nick,
     price,
-    date: new Date().toLocaleString()
-  });
+    date: new Date().toLocaleString(),
+    confirmed: false
+  };
 
+  orders.push(order);
   localStorage.setItem("orders", JSON.stringify(orders));
-
-  localStorage.setItem("payment", JSON.stringify({
-    item, nick, price, pix: PIX_KEY
-  }));
+  localStorage.setItem("payment", JSON.stringify(order));
 
   window.open("pagamento.html","_blank");
 }
@@ -106,7 +107,8 @@ function openAdmin(){
 
 function loginAdmin(){
   if(document.getElementById("adminPass").value !== ADMIN_PASSWORD){
-    alert("Senha errada"); return;
+    alert("Senha incorreta");
+    return;
   }
   renderOrders();
 }
@@ -122,6 +124,8 @@ function renderOrders(){
   }
 
   orders.forEach((o,i)=>{
+    if(o.confirmed) return;
+
     const el = document.createElement("div");
     el.className="order";
     el.innerHTML = `
@@ -137,8 +141,9 @@ function renderOrders(){
 
 function confirmOrder(index){
   const orders = JSON.parse(localStorage.getItem("orders"));
-  orders.splice(index,1);
-  localStorage.setItem("orders",JSON.stringify(orders));
+  orders[index].confirmed = true;
+  localStorage.setItem("orders", JSON.stringify(orders));
+  localStorage.setItem("paymentConfirmed", orders[index].id);
   renderOrders();
 }
 </script>
