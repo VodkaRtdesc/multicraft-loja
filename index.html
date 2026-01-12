@@ -1,180 +1,146 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Multi Craft • Loja Oficial</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #1e1e1e;
-      color: #fff;
-    }
-    header {
-      background: #2b2b2b;
-      padding: 20px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-    }
-    .items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #2f2f2f;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    .price {
-      font-size: 22px;
-      color: #00ff88;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 8px;
-      border-radius: 5px;
-      border: none;
-    }
-    button {
-      margin-top: 10px;
-      width: 100%;
-      padding: 10px;
-      background: #00aa55;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background: #008844;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #aaa;
-      font-size: 14px;
-    }
-    #adminPanel {
-      display: none;
-      background: #111;
-      padding: 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Multi Craft • Loja</title>
+<style>
+body{margin:0;font-family:Arial;background:#1e1e1e;color:#fff}
+header{background:#2b2b2b;padding:20px;text-align:center;font-size:28px}
+.container{max-width:1000px;margin:auto;padding:20px}
+.items{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:#2f2f2f;padding:20px;border-radius:10px}
+.price{color:#00ff88;font-size:22px}
+input,button{width:100%;padding:8px;margin-top:8px;border-radius:5px;border:none}
+button{background:#00aa55;color:#fff;font-size:16px;cursor:pointer}
+button:hover{background:#008844}
+footer{text-align:center;padding:20px;color:#aaa}
+#adminPanel{display:none;background:#111;padding:20px}
+.order{background:#222;padding:10px;margin-top:10px;border-radius:5px}
+.confirm{background:#0066ff;margin-top:5px}
+</style>
 </head>
+
 <body>
 
 <header>Multi Craft • Loja Oficial</header>
 
 <div class="container">
 
-  <h2>VIPs</h2>
-  <div class="items">
+<h2>VIP</h2>
+<div class="items">
+<div class="card">
+<h3>VIP</h3>
+<p class="price">R$ 10,00</p>
+<input id="nick-vip" placeholder="Nick do jogador">
+<button onclick="buy('VIP',10,'nick-vip')">Comprar via Pix</button>
+</div>
 
-    <div class="card">
-      <h3>VIP</h3>
-      <p class="price" id="price-vip">R$ 10,00</p>
-      <input id="nick-vip" placeholder="Nick do jogador">
-      <input placeholder="Cupom de desconto" oninput="applyCoupon(this, 'vip', 10)">
-      <button onclick="buy('VIP', 'nick-vip')">Comprar via Pix</button>
-    </div>
+<div class="card">
+<h3>VIP+</h3>
+<p class="price">R$ 20,00</p>
+<input id="nick-vipplus" placeholder="Nick do jogador">
+<button onclick="buy('VIP+',20,'nick-vipplus')">Comprar via Pix</button>
+</div>
+</div>
 
-    <div class="card">
-      <h3>VIP+</h3>
-      <p class="price" id="price-vipplus">R$ 20,00</p>
-      <input id="nick-vipplus" placeholder="Nick do jogador">
-      <input placeholder="Cupom de desconto" oninput="applyCoupon(this, 'vipplus', 20)">
-      <button onclick="buy('VIP+', 'nick-vipplus')">Comprar via Pix</button>
-    </div>
+<h2 style="margin-top:40px">Kits PvP</h2>
+<div class="items">
+<div class="card">
+<h3>Kit PvP Básico</h3>
+<p class="price">R$ 5,00</p>
+<input id="nick-kit1" placeholder="Nick do jogador">
+<button onclick="buy('Kit PvP Básico',5,'nick-kit1')">Comprar via Pix</button>
+</div>
 
-  </div>
-
-  <h2 style="margin-top:40px">Kits PvP</h2>
-  <div class="items">
-
-    <div class="card">
-      <h3>Kit PvP Básico</h3>
-      <p class="price" id="price-kit1">R$ 5,00</p>
-      <input id="nick-kit1" placeholder="Nick do jogador">
-      <input placeholder="Cupom de desconto" oninput="applyCoupon(this, 'kit1', 5)">
-      <button onclick="buy('Kit PvP Básico', 'nick-kit1')">Comprar via Pix</button>
-    </div>
-
-    <div class="card">
-      <h3>Kit PvP Pro</h3>
-      <p class="price" id="price-kit2">R$ 15,00</p>
-      <input id="nick-kit2" placeholder="Nick do jogador">
-      <input placeholder="Cupom de desconto" oninput="applyCoupon(this, 'kit2', 15)">
-      <button onclick="buy('Kit PvP Pro', 'nick-kit2')">Comprar via Pix</button>
-    </div>
-
-  </div>
+<div class="card">
+<h3>Kit PvP Pro</h3>
+<p class="price">R$ 15,00</p>
+<input id="nick-kit2" placeholder="Nick do jogador">
+<button onclick="buy('Kit PvP Pro',15,'nick-kit2')">Comprar via Pix</button>
+</div>
+</div>
 </div>
 
 <footer>
-  © 2026 Multi Craft • Pagamentos via Pix  
-  <br><br>
-  <button onclick="toggleAdmin()">Painel do Admin</button>
+© 2026 Multi Craft  
+<br><br>
+<button onclick="openAdmin()">Painel do Admin</button>
 </footer>
 
 <div id="adminPanel">
-  <h2>Painel do Admin</h2>
-  <input id="adminPass" type="password" placeholder="Senha do admin">
-  <button onclick="loginAdmin()">Entrar</button>
-  <ul id="orders"></ul>
+<h2>Painel do Admin</h2>
+<input type="password" id="adminPass" placeholder="Senha do admin">
+<button onclick="loginAdmin()">Entrar</button>
+<div id="orders"></div>
 </div>
 
 <script>
-  const coupons = {
-    'BEMVINDO10': 10
-  };
+const ADMIN_PASSWORD = "MultiCraftStaff1235"; // MUDE ISSO
+const PIX_KEY = "10099770164";
 
-  const adminPassword = "yunne1235_"; // MUDE ISSO
+function buy(item, price, nickId){
+  const nick = document.getElementById(nickId).value;
+  if(!nick){ alert("Digite seu nick"); return; }
 
-  function applyCoupon(input, id, price) {
-    let final = price;
-    if (coupons[input.value.toUpperCase()]) {
-      final = price - (price * coupons[input.value.toUpperCase()] / 100);
-    }
-    document.getElementById('price-' + id).innerText = 'R$ ' + final.toFixed(2);
+  const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+
+  orders.push({
+    item,
+    nick,
+    price,
+    date: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  localStorage.setItem("payment", JSON.stringify({
+    item, nick, price, pix: PIX_KEY
+  }));
+
+  window.open("pagamento.html","_blank");
+}
+
+function openAdmin(){
+  document.getElementById("adminPanel").style.display="block";
+}
+
+function loginAdmin(){
+  if(document.getElementById("adminPass").value !== ADMIN_PASSWORD){
+    alert("Senha errada"); return;
+  }
+  renderOrders();
+}
+
+function renderOrders(){
+  const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+  const div = document.getElementById("orders");
+  div.innerHTML = "";
+
+  if(orders.length === 0){
+    div.innerHTML = "<p>Nenhuma compra pendente.</p>";
+    return;
   }
 
-  function buy(item, nickId) {
-    const nick = document.getElementById(nickId).value;
-    if (!nick) {
-      alert("Digite seu nick do Minecraft");
-      return;
-    }
+  orders.forEach((o,i)=>{
+    const el = document.createElement("div");
+    el.className="order";
+    el.innerHTML = `
+      <strong>Item:</strong> ${o.item}<br>
+      <strong>Nick:</strong> ${o.nick}<br>
+      <strong>Valor:</strong> R$ ${o.price}<br>
+      <strong>Data:</strong> ${o.date}<br>
+      <button class="confirm" onclick="confirmOrder(${i})">Confirmar compra</button>
+    `;
+    div.appendChild(el);
+  });
+}
 
-    localStorage.setItem("payment", JSON.stringify({
-      item: item,
-      nick: nick,
-      chave: "10099770164"
-    }));
-
-    window.open("pagamento.html", "_blank");
-  }
-
-  function toggleAdmin() {
-    document.getElementById("adminPanel").style.display = "block";
-  }
-
-  function loginAdmin() {
-    if (document.getElementById("adminPass").value === adminPassword) {
-      document.getElementById("orders").innerHTML =
-        "<li>Painel ativo (versão simples)</li>";
-    } else {
-      alert("Senha incorreta");
-    }
-  }
+function confirmOrder(index){
+  const orders = JSON.parse(localStorage.getItem("orders"));
+  orders.splice(index,1);
+  localStorage.setItem("orders",JSON.stringify(orders));
+  renderOrders();
+}
 </script>
 
 </body>
