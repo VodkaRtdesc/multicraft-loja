@@ -41,30 +41,31 @@ body{
   <h2>Pagamento via Pix</h2>
   <p class="wait">Aguardando confirmação do pagamento...</p>
   <p>Envie o Pix para a chave abaixo:</p>
-  <div class="pix">SUA-CHAVE-PIX-AQUI</div>
+  <div class="pix">10099770164</div>
 </div>
 
 <script>
-function checkPayment(){
-  const payment = JSON.parse(localStorage.getItem("payment"));
-  const confirmedId = localStorage.getItem("paymentConfirmed");
+function verificarPagamento(){
+  const pagamento = JSON.parse(localStorage.getItem("payment"));
+  const confirmado = localStorage.getItem("paymentConfirmed");
 
-  if(!payment) return;
+  if(!pagamento) return;
 
-  if(confirmedId && payment.id == confirmedId){
+  if(confirmado && pagamento.id == confirmado){
     document.getElementById("content").innerHTML = `
       <h2 class="success">✅ Pagamento realizado!</h2>
       <p>Entre no servidor <strong>Multi Craft</strong></p>
       <p>para receber seus equipamentos.</p>
-      <br>
-      <p><strong>Item:</strong> ${payment.item}</p>
-      <p><strong>Nick:</strong> ${payment.nick}</p>
+      <hr>
+      <p><strong>Item:</strong> ${pagamento.item}</p>
+      <p><strong>Nick:</strong> ${pagamento.nick}</p>
+      <p><strong>Valor pago:</strong> R$ ${pagamento.finalPrice}</p>
     `;
   }
 }
 
-// verifica a cada 1 segundo
-setInterval(checkPayment, 1000);
+// checa a cada 1 segundo
+setInterval(verificarPagamento, 1000);
 </script>
 
 </body>
