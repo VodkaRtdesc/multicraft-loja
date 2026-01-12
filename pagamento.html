@@ -2,47 +2,65 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Pagamento Pix • Multi Craft</title>
+<title>Pagamento • Multi Craft</title>
 <style>
-body{font-family:Arial;background:#1e1e1e;color:#fff;margin:0}
-.box{max-width:500px;margin:50px auto;background:#2b2b2b;padding:25px;border-radius:10px;text-align:center}
-.pix{background:#111;padding:15px;border-radius:8px;margin:15px 0;word-break:break-all}
-.success{color:#00ff88;font-size:20px}
+body{
+  font-family: Arial;
+  background:#1e1e1e;
+  color:#fff;
+  text-align:center;
+  padding:40px
+}
+.box{
+  background:#2b2b2b;
+  padding:30px;
+  border-radius:10px;
+  max-width:500px;
+  margin:auto
+}
+.pix{
+  background:#111;
+  padding:15px;
+  margin-top:15px;
+  word-break:break-all;
+  border-radius:5px
+}
+.success{
+  color:#00ff88;
+  font-size:22px
+}
+.wait{
+  color:#ffcc00
+}
 </style>
 </head>
 
 <body>
 
-<div class="box" id="paymentBox">
+<div class="box" id="content">
   <h2>Pagamento via Pix</h2>
-  <p id="item"></p>
-  <p id="nick"></p>
-
-  <h3>Chave Pix</h3>
-  <div class="pix" id="pixKey"></div>
-
-  <p style="font-size:14px;color:#ccc">
-    Após o pagamento, aguarde a confirmação do administrador.
-  </p>
+  <p class="wait">Aguardando confirmação do pagamento...</p>
+  <p>Envie o Pix para a chave abaixo:</p>
+  <div class="pix">SUA-CHAVE-PIX-AQUI</div>
 </div>
 
 <script>
-const order = JSON.parse(localStorage.getItem("payment"));
+const payment = JSON.parse(localStorage.getItem("payment"));
 const confirmedId = localStorage.getItem("paymentConfirmed");
 
-if(!order){
-  document.getElementById("paymentBox").innerHTML = "<p>Pedido não encontrado.</p>";
-}else{
-  document.getElementById("item").innerText = "Item: " + order.item;
-  document.getElementById("nick").innerText = "Nick: " + order.nick;
-  document.getElementById("pixKey").innerText = "SUA-CHAVE-PIX-AQUI";
+if(!payment){
+  document.getElementById("content").innerHTML =
+    "<p>Nenhuma compra encontrada.</p>";
 }
 
-if(order && confirmedId == order.id){
-  document.getElementById("paymentBox").innerHTML = `
+if(confirmedId && payment && payment.id == confirmedId){
+  document.getElementById("content").innerHTML = `
     <h2 class="success">✅ Pagamento realizado!</h2>
     <p>Entre no servidor <strong>Multi Craft</strong></p>
     <p>para receber seus equipamentos.</p>
+    <br>
+    <p><strong>Item:</strong> ${payment.item}</p>
+    <p><strong>Nick:</strong> ${payment.nick}</p>
   `;
 }
 </script>
