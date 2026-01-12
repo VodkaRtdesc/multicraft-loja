@@ -2,197 +2,163 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Multi Craft - Loja Oficial</title>
-
+<title>Multi Craft • Loja Oficial</title>
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: #fff;
-}
-
-header {
-  background: #1c1c1c;
-  padding: 20px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  color: #00ff88;
-}
-
-.container {
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.kit {
-  background: #1e1e1e;
-  border-radius: 8px;
-  padding: 15px;
-  text-align: center;
-}
-
-.kit img {
-  width: 100%;
-  border-radius: 6px;
-}
-
-.kit h2 {
-  margin: 10px 0 5px;
-}
-
-.preco {
-  color: #00ff88;
-  font-weight: bold;
-}
-
-input, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border-radius: 5px;
-  border: none;
-}
-
-input {
-  background: #2a2a2a;
-  color: #fff;
-}
-
-button {
-  background: #00ff88;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #00cc6e;
-}
-
-/* COMPLEMENTOS */
-.comps {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.comps img {
-  width: 32%;
-  border-radius: 6px;
-  border: 1px solid #333;
-}
-
-/* PAGAMENTO */
-.pagamento {
-  display: none;
-  padding: 30px;
-  text-align: center;
-}
-
-.pagamento.active {
-  display: block;
-}
-
-.pix {
-  background: #1e1e1e;
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 20px;
-}
-
-.confirmado {
-  color: #00ff88;
-  font-size: 20px;
-  margin-top: 20px;
-}
+body{margin:0;font-family:Arial;background:#1e1e1e;color:#fff}
+header{background:#2b2b2b;padding:20px;text-align:center;font-size:28px}
+.container{max-width:1100px;margin:auto;padding:20px}
+.items{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:#2f2f2f;padding:20px;border-radius:10px}
+.price{color:#00ff88;font-size:20px}
+input,button{width:100%;padding:8px;margin-top:8px;border-radius:5px;border:none}
+button{background:#00aa55;color:#fff;font-size:15px;cursor:pointer}
+button:hover{background:#008844}
+footer{text-align:center;padding:20px;color:#aaa}
+#adminPanel{display:none;background:#111;padding:20px}
+.order{background:#222;padding:10px;margin-top:10px;border-radius:5px}
+.confirm{background:#0066ff;margin-top:5px}
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Multi Craft</h1>
-  <p>Loja oficial do servidor</p>
-</header>
+<header>Multi Craft • Loja Oficial</header>
 
 <div class="container">
 
-<!-- KIT TRIO -->
-<div class="kit">
-  <img src="images/kit-trio.jpg">
-  <h2>Kit Trio</h2>
-  <p class="preco">R$30,00</p>
+<h2>Kits PvP / Utilidades</h2>
 
-  <div class="comps">
-    <img src="images/comp-kit-trio.jpg">
-    <img src="images/comp-kit-trio1.jpg">
-    <img src="images/comp-kit-trio2.jpg">
-  </div>
+<div class="items">
 
-  <input id="nick-trio" placeholder="Nick do jogador">
-  <button onclick="comprar('Kit Trio', 30, 'nick-trio')">Comprar</button>
-</div>
-
-<!-- KIT CPVP -->
-<div class="kit">
-  <img src="images/kit-cpvp.jpg">
-  <h2>Kit CPVP</h2>
-  <p class="preco">R$5,00</p>
-
-  <input id="nick-cpvp" placeholder="Nick do jogador">
-  <button onclick="comprar('Kit CPVP', 5, 'nick-cpvp')">Comprar</button>
-</div>
-
-<!-- KIT FARM OP -->
-<div class="kit">
-  <img src="images/kit-farm-op.jpg">
-  <h2>Kit Farm OP</h2>
-  <p class="preco">R$25,00</p>
-
-  <input id="nick-farm" placeholder="Nick do jogador">
-  <button onclick="comprar('Kit Farm OP', 25, 'nick-farm')">Comprar</button>
-</div>
+<!-- KITS -->
+<script>
+const kits = [
+  ["Kit Dima",2],
+  ["Kit Dima Lendário",8],
+  ["Kit Ninja",12],
+  ["Kit Sub Neve",10],
+  ["Kit Neve OP",20],
+  ["Kit God",15],
+  ["Kit PvP Trio",30],
+  ["Kit CPvP",5],
+  ["Kit Clavudo",12],
+  ["Kit Farm OP",25],
+  ["Kit Full Maça",20],
+  ["Kit Foguetes",8],
+  ["Kit I Love You",12]
+];
+</script>
 
 </div>
+</div>
 
-<!-- PAGAMENTO -->
-<div class="pagamento" id="pagamento">
-  <h2>Pagamento via PIX</h2>
+<footer>
+© 2026 Multi Craft  
+<br><br>
+<button onclick="openAdmin()">Painel do Admin</button>
+</footer>
 
-  <div class="pix">
-    <p><strong>Chave PIX:</strong></p>
-    <p>SEU_PIX_AQUI</p>
-
-    <button onclick="confirmarPagamento()">Confirmar pagamento</button>
-  </div>
-
-  <div class="confirmado" id="confirmado"></div>
+<div id="adminPanel">
+<h2>Painel do Admin</h2>
+<input type="password" id="adminPass" placeholder="Senha do admin">
+<button onclick="loginAdmin()">Entrar</button>
+<div id="orders"></div>
 </div>
 
 <script>
-let compraAtual = null;
+const ADMIN_PASSWORD = "MultiCraftStaff1235";
 
-function comprar(kit, preco, nickId) {
+// CUPONS
+const COUPONS = {
+  "BEMVINDO10": 10,
+  "MULTI20": 20
+};
+
+// GERAR KITS NA TELA
+const itemsDiv = document.querySelector(".items");
+kits.forEach((k,i)=>{
+  itemsDiv.innerHTML += `
+    <div class="card">
+      <h3>${k[0]}</h3>
+      <p class="price">R$ ${k[1].toFixed(2)}</p>
+      <input id="nick${i}" placeholder="Nick do jogador">
+      <input id="coupon${i}" placeholder="Cupom (opcional)">
+      <button onclick="buy('${k[0]}',${k[1]},'nick${i}','coupon${i}')">
+        Comprar via Pix
+      </button>
+    </div>
+  `;
+});
+
+function buy(item, price, nickId, couponId){
   const nick = document.getElementById(nickId).value;
-  if (!nick) {
-    alert("Digite o nick do jogador");
-    return;
-  }
+  let coupon = document.getElementById(couponId).value.toUpperCase();
 
-  compraAtual = { kit, preco, nick };
-  document.querySelector('.container').style.display = 'none';
-  document.getElementById('pagamento').classList.add('active');
+  if(!nick){ alert("Digite o nick do jogador"); return; }
+
+  let discount = COUPONS[coupon] || 0;
+  let finalPrice = price - (price * discount / 100);
+
+  const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+
+  const order = {
+    id: Date.now(),
+    item,
+    nick,
+    price,
+    finalPrice: finalPrice.toFixed(2),
+    coupon: discount ? coupon : "Nenhum",
+    date: new Date().toLocaleString(),
+    confirmed: false
+  };
+
+  orders.push(order);
+  localStorage.setItem("orders", JSON.stringify(orders));
+  localStorage.setItem("payment", JSON.stringify(order));
+
+  window.open("pagamento.html","_blank");
 }
 
-function confirmarPagamento() {
-  document.querySelector('.pix').style.display = 'none';
-  document.getElementById('confirmado').innerText =
-    "Pagamento realizado! Entre no servidor para receber seus equipamentos.";
+function openAdmin(){
+  document.getElementById("adminPanel").style.display="block";
+}
+
+function loginAdmin(){
+  if(document.getElementById("adminPass").value !== ADMIN_PASSWORD){
+    alert("Senha incorreta");
+    return;
+  }
+  renderOrders();
+}
+
+function renderOrders(){
+  const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+  const div = document.getElementById("orders");
+  div.innerHTML = "";
+
+  orders.forEach((o,i)=>{
+    if(o.confirmed) return;
+
+    div.innerHTML += `
+      <div class="order">
+        <strong>Item:</strong> ${o.item}<br>
+        <strong>Nick:</strong> ${o.nick}<br>
+        <strong>Valor:</strong> R$ ${o.finalPrice}<br>
+        <strong>Cupom:</strong> ${o.coupon}<br>
+        <button class="confirm" onclick="confirmOrder(${i})">
+          Confirmar compra
+        </button>
+      </div>
+    `;
+  });
+}
+
+function confirmOrder(index){
+  const orders = JSON.parse(localStorage.getItem("orders"));
+  orders[index].confirmed = true;
+  localStorage.setItem("orders", JSON.stringify(orders));
+  localStorage.setItem("paymentConfirmed", orders[index].id);
+  renderOrders();
 }
 </script>
 
