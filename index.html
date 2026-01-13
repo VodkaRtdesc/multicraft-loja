@@ -24,6 +24,9 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 header h1 {
@@ -43,7 +46,7 @@ header a {
 
 .kits {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
@@ -91,73 +94,89 @@ header a {
 </header>
 
 <div class="container">
-  <div class="kits">
+<div class="kits">
 
-    <!-- KIT DIMA -->
-    <div class="kit">
-      <img src="imagens/kit-dima.jpg">
-      <h3>Kit Dima</h3>
-      <p>R$ 2,00</p>
-      <button onclick="comprar('Kit Dima', 2)">Comprar</button>
-    </div>
+<!-- 2 -->
+<div class="kit">
+  <img src="imagens/kit-dima.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Dima</h3>
+  <p>R$ 2,00</p>
+  <button onclick="comprar('Kit Dima', 2)">Comprar</button>
+</div>
 
-    <!-- KIT DIMA LENDARIO -->
-    <div class="kit">
-      <img src="imagens/kit-dima-lendario.jpg">
-      <h3>Kit Dima Lendário</h3>
-      <p>R$ 8,00</p>
-      <button onclick="comprar('Kit Dima Lendário', 8)">Comprar</button>
-    </div>
+<!-- 5 -->
+<div class="kit">
+  <img src="imagens/kit-cpvp.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit CPVP</h3>
+  <p>R$ 5,00</p>
+  <button onclick="comprar('Kit CPVP', 5)">Comprar</button>
+</div>
 
-    <!-- KIT CPVP -->
-    <div class="kit">
-      <img src="imagens/kit-cpvp.jpg">
-      <h3>Kit CPVP</h3>
-      <p>R$ 5,00</p>
-      <button onclick="comprar('Kit CPVP', 5)">Comprar</button>
-    </div>
+<!-- 8 -->
+<div class="kit">
+  <img src="imagens/kit-dima-lendario.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Dima Lendário</h3>
+  <p>R$ 8,00</p>
+  <button onclick="comprar('Kit Dima Lendário', 8)">Comprar</button>
+</div>
 
-    <!-- KIT NINJA -->
-    <div class="kit">
-      <img src="imagens/kit-ninja.jpg">
-      <h3>Kit Ninja</h3>
-      <p>R$ 12,00</p>
-      <button onclick="comprar('Kit Ninja', 12)">Comprar</button>
-    </div>
+<!-- 12 -->
+<div class="kit">
+  <img src="imagens/kit-ninja.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Ninja</h3>
+  <p>R$ 12,00</p>
+  <button onclick="comprar('Kit Ninja', 12)">Comprar</button>
+</div>
 
-    <!-- KIT GOD -->
-    <div class="kit">
-      <img src="imagens/kit-god.jpg">
-      <h3>Kit God</h3>
-      <p>R$ 15,00</p>
-      <button onclick="comprar('Kit God', 15)">Comprar</button>
-    </div>
+<!-- 12 -->
+<div class="kit">
+  <img src="imagens/kit-clavudo.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Clavudo</h3>
+  <p>R$ 12,00</p>
+  <button onclick="comprar('Kit Clavudo', 12)">Comprar</button>
+</div>
 
-    <!-- KIT NEVE OP -->
-    <div class="kit">
-      <img src="imagens/kit-neve-op.jpg">
-      <h3>Kit Neve OP</h3>
-      <p>R$ 20,00</p>
-      <button onclick="comprar('Kit Neve OP', 20)">Comprar</button>
-    </div>
+<!-- 15 -->
+<div class="kit">
+  <img src="imagens/kit-god.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit God</h3>
+  <p>R$ 15,00</p>
+  <button onclick="comprar('Kit God', 15)">Comprar</button>
+</div>
 
-    <!-- KIT FARM OP -->
-    <div class="kit">
-      <img src="imagens/kit-farm-op.jpg">
-      <h3>Kit Farm OP</h3>
-      <p>R$ 25,00</p>
-      <button onclick="comprar('Kit Farm OP', 25)">Comprar</button>
-    </div>
+<!-- 20 -->
+<div class="kit">
+  <img src="imagens/kit-neve-op.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Neve OP</h3>
+  <p>R$ 20,00</p>
+  <button onclick="comprar('Kit Neve OP', 20)">Comprar</button>
+</div>
 
-    <!-- KIT TRIO -->
-    <div class="kit">
-      <img src="imagens/kit-trio.jpg">
-      <h3>Kit Trio</h3>
-      <p>R$ 30,00</p>
-      <button onclick="comprar('Kit Trio', 30)">Comprar</button>
-    </div>
+<!-- 20 -->
+<div class="kit">
+  <img src="imagens/kit-full-maca.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Full Maça</h3>
+  <p>R$ 20,00</p>
+  <button onclick="comprar('Kit Full Maça', 20)">Comprar</button>
+</div>
 
-  </div>
+<!-- 25 -->
+<div class="kit">
+  <img src="imagens/kit-farm-op.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Farm OP</h3>
+  <p>R$ 25,00</p>
+  <button onclick="comprar('Kit Farm OP', 25)">Comprar</button>
+</div>
+
+<!-- 30 -->
+<div class="kit">
+  <img src="imagens/kit-trio.jpg" onerror="this.src='imagens/placeholder.jpg'">
+  <h3>Kit Trio</h3>
+  <p>R$ 30,00</p>
+  <button onclick="comprar('Kit Trio', 30)">Comprar</button>
+</div>
+
+</div>
 </div>
 
 <script>
