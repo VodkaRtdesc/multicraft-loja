@@ -3,172 +3,198 @@
 <head>
 <meta charset="UTF-8">
 <title>Multi Craft - Loja Oficial</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
+body {
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#0f0f0f;
-  color:#fff;
+  font-family: Arial, sans-serif;
+  background:#0e0e0e;
+  color:white;
 }
 
-header{
-  background:#1c1c1c;
+header {
+  background:#111;
   padding:20px;
   text-align:center;
-}
-
-.admin-btn{
-  display:inline-block;
-  margin-top:12px;
-  padding:8px 14px;
-  background:#00c853;
-  color:#000;
+  font-size:28px;
   font-weight:bold;
-  text-decoration:none;
-  border-radius:6px;
 }
 
-.admin-btn:hover{
-  background:#00e676;
-}
-
-input{
-  padding:10px;
-  width:240px;
-  border-radius:5px;
-  border:none;
-  margin-top:10px;
-}
-
-.kits{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+.container {
+  max-width:1100px;
+  margin:auto;
   padding:20px;
 }
 
-.kit{
-  background:#1c1c1c;
+input {
+  width:100%;
+  padding:12px;
+  margin-bottom:20px;
+  border-radius:6px;
+  border:none;
+  font-size:16px;
+}
+
+.kits {
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;
+}
+
+.kit {
+  background:#1a1a1a;
   padding:15px;
   border-radius:10px;
   text-align:center;
 }
 
-.kit img{
+.kit img {
   width:100%;
   height:150px;
   object-fit:cover;
   border-radius:8px;
 }
 
-button{
+.kit h3 {
+  margin:10px 0 5px;
+}
+
+.kit p {
+  margin:5px 0;
+}
+
+.kit button {
   margin-top:10px;
-  padding:10px;
   width:100%;
+  padding:10px;
   border:none;
-  border-radius:5px;
+  border-radius:6px;
   background:#00c853;
   font-weight:bold;
   cursor:pointer;
 }
 
-button:hover{
-  background:#00e676;
-}
-
-footer{
-  background:#1c1c1c;
-  text-align:center;
+footer {
+  margin-top:40px;
   padding:15px;
+  text-align:center;
+  background:#111;
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Multi Craft</h1>
-  <p>Loja oficial de kits e VIPs</p>
+<header>Multi Craft - Loja Oficial</header>
 
-  <input id="nick" placeholder="Nick do jogador"><br>
+<div class="container">
 
-  <!-- BOTÃO ADMIN (NÃO SOME) -->
-  <a class="admin-btn" href="admin.html" target="_blank">
-    Painel Admin
-  </a>
-</header>
+  <input id="nick" placeholder="Digite seu nick do Minecraft Bedrock">
 
-<div class="kits">
+  <div class="kits">
 
-  <div class="kit">
-    <img src="images/kit-dima.jpg">
-    <h3>Kit Dima</h3>
-    <p>R$ 2</p>
-    <button onclick="comprarKit('Kit Dima',2)">Comprar</button>
+    <!-- ORDEM DO MENOR PARA O MAIOR -->
+
+    <div class="kit">
+      <img src="imagens/kit-dima.jpg">
+      <h3>Kit Dima</h3>
+      <p>R$ 2,00</p>
+      <button onclick="comprar('Kit Dima',2)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-cpvp.jpg">
+      <h3>Kit CPVP</h3>
+      <p>R$ 5,00</p>
+      <button onclick="comprar('Kit CPVP',5)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-foguetes.jpg">
+      <h3>Kit Foguetes</h3>
+      <p>R$ 8,00</p>
+      <button onclick="comprar('Kit Foguetes',8)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-dima-lendario.jpg">
+      <h3>Kit Dima Lendário</h3>
+      <p>R$ 8,00</p>
+      <button onclick="comprar('Kit Dima Lendário',8)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-ninja.jpg">
+      <h3>Kit Ninja</h3>
+      <p>R$ 12,00</p>
+      <button onclick="comprar('Kit Ninja',12)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-clavudo.jpg">
+      <h3>Kit Clavudo</h3>
+      <p>R$ 12,00</p>
+      <button onclick="comprar('Kit Clavudo',12)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-god.jpg">
+      <h3>Kit God</h3>
+      <p>R$ 15,00</p>
+      <button onclick="comprar('Kit God',15)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-sub-neve.jpg">
+      <h3>Kit Sub Neve</h3>
+      <p>R$ 15,00</p>
+      <button onclick="comprar('Kit Sub Neve',15)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-neve-op.jpg">
+      <h3>Kit Neve OP</h3>
+      <p>R$ 20,00</p>
+      <button onclick="comprar('Kit Neve OP',20)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-full-maca.jpg">
+      <h3>Kit Full Maça</h3>
+      <p>R$ 20,00</p>
+      <button onclick="comprar('Kit Full Maça',20)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-farm-op.jpg">
+      <h3>Kit Farm OP</h3>
+      <p>R$ 25,00</p>
+      <button onclick="comprar('Kit Farm OP',25)">Comprar</button>
+    </div>
+
+    <div class="kit">
+      <img src="imagens/kit-trio.jpg">
+      <h3>Kit Trio</h3>
+      <p>R$ 30,00</p>
+      <button onclick="comprar('Kit Trio',30)">Comprar</button>
+    </div>
+
   </div>
-
-  <div class="kit">
-    <img src="images/kit-cpvp.jpg">
-    <h3>Kit CPVP</h3>
-    <p>R$ 5</p>
-    <button onclick="comprarKit('Kit CPVP',5)">Comprar</button>
-  </div>
-
-  <div class="kit">
-    <img src="images/kit-foguetes.jpg">
-    <h3>Kit Foguetes</h3>
-    <p>R$ 8</p>
-    <button onclick="comprarKit('Kit Foguetes',8)">Comprar</button>
-  </div>
-
-  <div class="kit">
-    <img src="images/kit-ninja.jpg">
-    <h3>Kit Ninja</h3>
-    <p>R$ 12</p>
-    <button onclick="comprarKit('Kit Ninja',12)">Comprar</button>
-  </div>
-
-  <div class="kit">
-    <img src="images/kit-god.jpg">
-    <h3>Kit God</h3>
-    <p>R$ 15</p>
-    <button onclick="comprarKit('Kit God',15)">Comprar</button>
-  </div>
-
-  <div class="kit">
-    <img src="images/kit-neve-op.jpg">
-    <h3>Kit Neve OP</h3>
-    <p>R$ 20</p>
-    <button onclick="comprarKit('Kit Neve OP',20)">Comprar</button>
-  </div>
-
-  <div class="kit">
-    <img src="images/kit-trio.jpg">
-    <h3>Kit Trio</h3>
-    <p>R$ 30</p>
-    <button onclick="comprarKit('Kit Trio',30)">Comprar</button>
-  </div>
-
 </div>
 
 <footer>
-© Multi Craft - Todos os direitos reservados
+© Multi Craft • Loja oficial do servidor
 </footer>
 
 <script>
-function comprarKit(nome,valor){
-  const nick = document.getElementById("nick").value.trim();
+function comprar(nome,valor){
+  const nick = document.getElementById("nick").value;
   if(!nick){
-    alert("Digite seu nick do Minecraft!");
+    alert("Digite seu nick primeiro");
     return;
   }
-  const url =
-    "pagamentos.html?nick="+encodeURIComponent(nick)+
-    "&kit="+encodeURIComponent(nome)+
-    "&valor="+encodeURIComponent(valor);
-
+  const url = `pagamentos.html?nick=${encodeURIComponent(nick)}&kit=${encodeURIComponent(nome)}&valor=${valor}`;
   window.open(url,"_blank");
 }
 </script>
