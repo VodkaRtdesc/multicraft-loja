@@ -1,132 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Pagamento - Multi Craft</title>
+  <meta charset="UTF-8">
+  <title>Pagamento</title>
+  <style>
+    body {
+      background: #0e0e0e;
+      color: #fff;
+      font-family: Arial;
+      padding: 20px;
+    }
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-<style>
-body {
-  background:#0f0f0f;
-  color:white;
-  font-family:Arial, sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  margin:0;
-}
-
-.box {
-  background:#1b1b1b;
-  padding:25px;
-  border-radius:12px;
-  width:100%;
-  max-width:420px;
-  text-align:center;
-}
-
-h2 { margin-top:0 }
-
-.info {
-  background:#111;
-  padding:10px;
-  border-radius:6px;
-  margin:10px 0;
-}
-
-button {
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:6px;
-  background:#00c853;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:15px;
-}
-</style>
+    button {
+      padding: 15px;
+      background: #00ff88;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="box">
-  <h2>Pagamento via PIX</h2>
+<h2>💳 Pagamento</h2>
 
-  <div class="info"><b>Nick:</b> <span id="nick"></span></div>
-  <div class="info"><b>Kit:</b> <span id="kit"></span></div>
-  <div class="info"><b>Valor:</b> R$ <span id="valor"></span></div>
+<p>📦 Kit: <span id="kit"></span></p>
+<p>💰 Valor: R$<span id="valor"></span></p>
+<p>🔑 Chave PIX: <b>10099770164</b></p>
+<p>⏳ Aguarde a confirmação de um staff.</p>
 
-  <p>🔑 Chave PIX</p>
-  <h3>10099770164</h3>
+<input id="nick" placeholder="Digite seu nick"><br><br>
 
-  <p>Aguarde a confirmação de um staff para receber seus itens.</p>
-
-  <button onclick="confirmar()">Já paguei</button>
-</div>
+<button onclick="confirmar()">Confirmar Pagamento</button>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyASk1w8w6YzIQhkbJh7xv5BJb8ZHmG7MxM",
-  authDomain: "multicraft-ea978.firebaseapp.com",
-  databaseURL: "https://multicraft-ea978-default-rtdb.firebaseio.com",
-  projectId: "multicraft-ea978",
-  storageBucket: "multicraft-ea978.firebasestorage.app",
-  messagingSenderId: "587079793250",
-  appId: "1:587079793250:web:21d3fb74ae55eb6f5eef3b"
-};
+const webhookPendente = "https://discord.com/api/webhooks/1460447479563682012/ZwXCxogPkp2EBYQGE7--VVY9OFS7Ma7-APSRoVQFM0JbCrQu-ufUkfwTMRwdtiXoZo_G";
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-const db = firebase.database();
+document.getElementById("kit").innerText = localStorage.getItem("kit");
+document.getElementById("valor").innerText = localStorage.getItem("valor");
 
-// pega dados da URL
-const params = new URLSearchParams(window.location.search);
-const nick = params.get("nick");
-const kit = params.get("kit");
-const valor = params.get("valor");
+function confirmar() {
+  const dados = {
+    nick: document.getElementById("nick").value,
+    kit: localStorage.getItem("kit"),
+    valor: localStorage.getItem("valor")
+  };
 
-document.getElementById("nick").innerText = nick || "-";
-document.getElementById("kit").innerText = kit || "-";
-document.getElementById("valor").innerText = valor || "-";
-
-const webhookPendente = "https://discord.com/api/webhooks/1460447479563682012/ZwXCxogPkp2EBYQGE7--VVY9OFS7Ma7-APSRoVQFM0JbCrQu-ufUkfwTMRwdtiXoZ";
-
-function confirmar(){
-  if(!nick || !kit){
-    alert("Dados inválidos");
-    return;
-  }
-
-  const id = Date.now();
-
-  db.ref("compras/" + id).set({
-    nick: nick,
-    kit: kit,
-    valor: valor,
-    status: "pendente"
-  });
-
-  fetch(webhookPendente,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
+  fetch(webhookPendente, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      embeds:[{
-        title:"🟡 Compra pendente",
-        color:16776960,
-        fields:[
-          {name:"Nick",value:nick,inline:true},
-          {name:"Kit",value:kit,inline:true},
-          {name:"Valor",value:"R$ "+valor,inline:true}
-        ]
-      }]
+      content:
+        "🕒 **COMPRA PENDENTE**\n" +
+        "👤 Nick: " + dados.nick + "\n" +
+        "📦 Kit: " + dados.kit + "\n" +
+        "💰 Valor: R$" + dados.valor
     })
   });
 
-  alert("Pagamento enviado! Aguarde um staff.");
+  localStorage.setItem("compraPendente", JSON.stringify(dados));
+  alert("Pagamento enviado! Aguarde confirmação.");
 }
 </script>
 
