@@ -5,21 +5,13 @@
 <title>Multi Craft - Loja</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-html {
-  height: auto;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
   background: #111;
   color: #fff;
-  min-height: 100vh;
   overflow-y: auto;
 }
 
@@ -29,10 +21,7 @@ header {
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
-  color: #00ff88;
-}
+header h1 { color: #00ff88; margin: 0; }
 
 .container {
   padding: 20px;
@@ -43,8 +32,8 @@ header h1 {
 
 .kit {
   background: #1e1e1e;
-  border-radius: 8px;
   padding: 15px;
+  border-radius: 8px;
   text-align: center;
 }
 
@@ -53,22 +42,28 @@ header h1 {
   border-radius: 6px;
 }
 
+.comps {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.comps img {
+  width: 32%;
+  border-radius: 6px;
+}
+
 .preco {
   color: #00ff88;
   font-weight: bold;
 }
 
-input, button {
+button, input {
   width: 100%;
   padding: 10px;
   margin-top: 8px;
   border-radius: 5px;
   border: none;
-}
-
-input {
-  background: #2a2a2a;
-  color: #fff;
 }
 
 button {
@@ -77,15 +72,27 @@ button {
   cursor: pointer;
 }
 
-.comps {
-  display: flex;
-  gap: 6px;
-  margin-top: 10px;
+input {
+  background: #2a2a2a;
+  color: #fff;
 }
 
-.comps img {
-  width: 32%;
-  border-radius: 6px;
+#pagamento, #admin {
+  display: none;
+  padding: 20px;
+}
+
+.box {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.lista {
+  background: #2a2a2a;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
 }
 </style>
 </head>
@@ -97,17 +104,14 @@ button {
   <p>Loja oficial</p>
 </header>
 
-<div class="container">
-
-<div class="kit">
-  <img src="images/kit-dima.jpg">
-  <h2>Kit Dima</h2>
-  <p class="preco">R$2,00</p>
-</div>
+<div class="container" id="loja">
 
 <div class="kit">
   <img src="images/kit-trio.jpg">
   <h2>Kit Trio</h2>
+  <p class="preco">R$30,00</p>
+  <input placeholder="Nick do jogador" id="nick-trio">
+  <button onclick="comprar('Kit Trio',30,'nick-trio')">Comprar</button>
   <div class="comps">
     <img src="images/comp-kit-trio.jpg">
     <img src="images/comp-kit-trio1.jpg">
@@ -116,39 +120,75 @@ button {
 </div>
 
 <div class="kit">
-  <img src="images/kit-cpvp.jpg">
-  <h2>Kit CPVP</h2>
-</div>
-
-<div class="kit">
-  <img src="images/kit-farm-op.jpg">
-  <h2>Kit Farm OP</h2>
+  <img src="images/kit-god.jpg">
+  <h2>Kit God</h2>
+  <p class="preco">R$15,00</p>
+  <input placeholder="Nick do jogador" id="nick-god">
+  <button onclick="comprar('Kit God',15,'nick-god')">Comprar</button>
 </div>
 
 <div class="kit">
   <img src="images/kit-neve-op.jpg">
   <h2>Kit Neve OP</h2>
+  <p class="preco">R$20,00</p>
+  <input placeholder="Nick do jogador" id="nick-neve">
+  <button onclick="comprar('Kit Neve OP',20,'nick-neve')">Comprar</button>
 </div>
 
-<div class="kit">
-  <img src="images/kit-sub-neve.jpg">
-  <h2>Kit Sub Neve</h2>
 </div>
 
-<div class="kit">
-  <img src="images/kit-god-pvp.jpg">
-  <h2>Kit God PVP</h2>
-</div>
-
-<div class="kit">
-  <img src="images/kit-duo.jpg">
-  <h2>Kit Duo</h2>
-  <div class="comps">
-    <img src="images/comp-kit-duo.jpg">
+<!-- PAGAMENTO -->
+<div id="pagamento">
+  <div class="box">
+    <h2>Pagamento PIX</h2>
+    <p id="infoPagamento"></p>
+    <p><b>Chave PIX:</b> SUA_CHAVE_PIX_AQUI</p>
+    <button onclick="confirmar()">Confirmar pagamento</button>
+    <p id="status"></p>
   </div>
 </div>
 
+<!-- ADMIN -->
+<div id="admin">
+  <div class="box">
+    <h2>Painel Admin</h2>
+    <input id="senha" placeholder="Senha admin">
+    <button onclick="entrarAdmin()">Entrar</button>
+    <div id="compras"></div>
+  </div>
 </div>
+
+<script>
+let compras = [];
+let atual = {};
+
+function comprar(kit, preco, nickId) {
+  const nick = document.getElementById(nickId).value;
+  if (!nick) return alert("Digite o nick");
+
+  atual = { kit, preco, nick };
+  document.getElementById("loja").style.display = "none";
+  document.getElementById("pagamento").style.display = "block";
+  document.getElementById("infoPagamento").innerText =
+    `Kit: ${kit} | Nick: ${nick} | Valor: R$${preco}`;
+}
+
+function confirmar() {
+  compras.push(atual);
+  document.getElementById("status").innerText =
+    "✅ Pagamento realizado! Entre no servidor para receber seus itens.";
+}
+
+function entrarAdmin() {
+  if (document.getElementById("senha").value !== "MultiCraftStaff1235") {
+    alert("Senha incorreta");
+    return;
+  }
+  document.getElementById("compras").innerHTML = compras.map(c =>
+    `<div class="lista">${c.nick} comprou ${c.kit} (R$${c.preco})</div>`
+  ).join("");
+}
+</script>
 
 </body>
 </html>
