@@ -2,19 +2,35 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Pagamento</title>
+  <title>Pagamento - MultiCraft</title>
   <style>
     body {
       background: #0e0e0e;
       color: #fff;
       font-family: Arial;
-      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #1c1c1c;
+      padding: 25px;
+      border-radius: 10px;
+      width: 350px;
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
     }
 
     button {
-      padding: 15px;
       background: #00ff88;
-      border: none;
       font-weight: bold;
       cursor: pointer;
     }
@@ -22,16 +38,21 @@
 </head>
 <body>
 
-<h2>💳 Pagamento</h2>
+<div class="card">
+  <h2>💳 Pagamento</h2>
 
-<p>📦 Kit: <span id="kit"></span></p>
-<p>💰 Valor: R$<span id="valor"></span></p>
-<p>🔑 Chave PIX: <b>10099770164</b></p>
-<p>⏳ Aguarde a confirmação de um staff.</p>
+  <p><b>Kit:</b> <span id="kit"></span></p>
+  <p><b>Valor:</b> R$<span id="valor"></span></p>
+  <p><b>Chave PIX:</b><br>10099770164</p>
 
-<input id="nick" placeholder="Digite seu nick"><br><br>
+  <input id="nick" placeholder="Nick no Minecraft">
 
-<button onclick="confirmar()">Confirmar Pagamento</button>
+  <button onclick="confirmar()">Já paguei</button>
+
+  <p style="margin-top:10px;font-size:12px">
+    Aguarde a confirmação de um staff.
+  </p>
+</div>
 
 <script>
 const webhookPendente = "https://discord.com/api/webhooks/1460447479563682012/ZwXCxogPkp2EBYQGE7--VVY9OFS7Ma7-APSRoVQFM0JbCrQu-ufUkfwTMRwdtiXoZo_G";
@@ -40,8 +61,15 @@ document.getElementById("kit").innerText = localStorage.getItem("kit");
 document.getElementById("valor").innerText = localStorage.getItem("valor");
 
 function confirmar() {
+  const nick = document.getElementById("nick").value;
+
+  if (!nick) {
+    alert("Digite seu nick!");
+    return;
+  }
+
   const dados = {
-    nick: document.getElementById("nick").value,
+    nick,
     kit: localStorage.getItem("kit"),
     valor: localStorage.getItem("valor")
   };
@@ -59,7 +87,7 @@ function confirmar() {
   });
 
   localStorage.setItem("compraPendente", JSON.stringify(dados));
-  alert("Pagamento enviado! Aguarde confirmação.");
+  alert("Pagamento enviado! Aguarde.");
 }
 </script>
 
