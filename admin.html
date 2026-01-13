@@ -2,22 +2,23 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Admin Panel</title>
+<title>Admin Panel - MultiCraft</title>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <style>
-body { background:#111; color:white; font-family:Arial }
-.card { background:#1c1c1c; padding:10px; margin:10px; border-radius:8px }
-button { margin:5px; padding:5px 10px; cursor:pointer }
+body { background:#0f0f0f; color:white; font-family:Arial }
+.card { background:#1b1b1b; padding:15px; margin:10px; border-radius:8px }
+button { padding:6px 10px; margin:5px; cursor:pointer }
 .ok { background:#00c853 }
 .no { background:#d50000; color:white }
 </style>
 </head>
 
 <body>
-<h2>Painel Admin</h2>
-<div id="lista"></div>
+<h2>Painel Admin - Compras Pendentes</h2>
+<div id="lista">Carregando...</div>
 
 <script>
 const firebaseConfig = {
@@ -30,30 +31,41 @@ const firebaseConfig = {
   appId: "1:587079793250:web:21d3fb74ae55eb6f5eef3b"
 };
 
-firebase.initializeApp(firebaseConfig);
+// 🔒 impede reinicialização
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
 const db = firebase.database();
 
 const webhookPublico = "https://discord.com/api/webhooks/1460447774993551380/nEe0VkGTtJufe23fLoEDqEf3ZrOslMHFDmftPZVY59SLtdiiYEvhxwZju4l-GsjUcCjL";
 
-db.ref("compras").on("value", snap=>{
-  const div = document.getElementById("lista");
-  div.innerHTML = "";
-  snap.forEach(c=>{
-    const d = c.val();
-    if(d.status !== "pendente") return;
+db.ref("compras").on("value", snap => {
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
 
-    div.innerHTML += `
+  if (!snap.exists()) {
+    lista.innerHTML = "Nenhuma compra pendente.";
+    return;
+  }
+
+  snap.forEach(c => {
+    const d = c.val();
+    if (d.status !== "pendente") return;
+
+    lista.innerHTML += `
       <div class="card">
-        <b>${d.nick}</b><br>
-        ${d.kit}<br>
+        <b>Nick:</b> ${d.nick}<br>
+        <b>Kit:</b> ${d.kit}<br><br>
         <button class="ok" onclick="confirmar('${c.key}','${d.nick}','${d.kit}')">Confirmar</button>
         <button class="no" onclick="negar('${c.key}')">Negar</button>
-      </div>`;
+      </div>
+    `;
   });
 });
 
 function confirmar(id,nick,kit){
-  db.ref("compras/"+id+"/status").set("confirmado");
+  db.ref("compras/"+id).update({ status:"confirmado" });
 
   fetch(webhookPublico,{
     method:"POST",
@@ -72,7 +84,7 @@ function confirmar(id,nick,kit){
 }
 
 function negar(id){
-  db.ref("compras/"+id+"/status").set("negado");
+  db.ref("compras/"+id).update({ status:"negado" });
 }
 </script>
 </body>
