@@ -1,150 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>Pagamento - MultiCraft</title>
-
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-  <style>
-    body{
-      background:#0e0e0e;
-      color:#fff;
-      font-family:Arial, sans-serif;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:100vh;
-      margin:0;
-      padding:20px;
-    }
-    .card{
-      background:#1c1c1c;
-      padding:25px;
-      border-radius:12px;
-      width:100%;
-      max-width:420px;
-      text-align:center;
-    }
-    input,button{
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      margin-top:10px;
-      font-size:16px;
-    }
-    button{
-      background:#00ff88;
-      font-weight:bold;
-      cursor:pointer;
-    }
-    .line{
-      background:#111;
-      padding:10px;
-      border-radius:8px;
-      margin-top:10px;
-      text-align:left;
-    }
-    .small{
-      font-size:12px;
-      color:#bbb;
-      margin-top:10px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Infinity Craft • Pagamento PIX</title>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+  <div class="container">
+    <div class="topbar">
+      <div>
+        <div style="font-weight:900;font-size:18px">Infinity Craft</div>
+        <div class="small">Checkout PIX</div>
+      </div>
+      <div class="row">
+        <a class="btn btn-ghost" href="index.html">Voltar</a>
+        <a class="btn btn-ghost" href="https://discord.gg/kJVefNZn6m" target="_blank">Discord</a>
+      </div>
+    </div>
 
-<div class="card">
-  <h2>💳 Pagamento</h2>
+    <div class="grid" style="grid-template-columns:1.15fr .85fr">
+      <div class="card">
+        <h2 style="margin:0">Finalizar pedido</h2>
+        <div class="small">Preencha nick e usuário do Discord para o staff confirmar.</div>
+        <div class="hr"></div>
 
-  <div class="line"><b>📦 Kit:</b> <span id="kit">-</span></div>
-  <div class="line"><b>💰 Valor:</b> R$ <span id="valor">-</span></div>
+        <div class="label">Kit</div>
+        <div class="toast" id="kitBox">Carregando…</div>
 
-  <div class="line" style="text-align:center;">
-    <div><b>🔑 Chave PIX</b></div>
-    <div style="font-size:18px;margin-top:6px;"><b>10099770164</b></div>
+        <div class="label">Nick (Minecraft)</div>
+        <input id="playerName" class="input" placeholder="SeuNick123" maxlength="32">
+
+        <div class="label">Usuário do Discord</div>
+        <input id="discordUser" class="input" placeholder="@seunome ou Nome#1234" maxlength="64">
+
+        <div class="label">Cupom (opcional)</div>
+        <div class="row" style="flex-wrap:nowrap">
+          <input id="couponCode" class="input" placeholder="INFINITY10" style="flex:1">
+          <button class="btn btn-ghost" id="btnApply">Aplicar</button>
+        </div>
+        <div class="small" id="couponMsg" style="margin-top:8px"></div>
+
+        <div class="hr"></div>
+        <div class="row">
+          <div>
+            <div class="small">Total</div>
+            <div class="price" id="totalPrice">—</div>
+          </div>
+          <button class="btn" id="btnCreateOrder">Gerar PIX</button>
+        </div>
+
+        <div id="orderArea" class="hidden" style="margin-top:14px">
+          <div class="toast">
+            <b>Status:</b> <span id="orderStatus">Aguardando staff</span><br>
+            <span class="small">Pedido ID: <span id="orderId"></span></span>
+          </div>
+
+          <div class="label">Chave PIX</div>
+          <div class="copybox">
+            <code id="pixKey">Carregando…</code>
+            <button class="btn btn-ghost" id="btnCopyPix">Copiar</button>
+          </div>
+
+          <div class="label">Mensagem</div>
+          <div class="toast small" id="pixMessage">—</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0">Como concluir</h3>
+        <div class="hr"></div>
+        <ol class="small" style="margin:0;padding-left:18px;line-height:1.5">
+          <li>Gere o PIX.</li>
+          <li>Pague usando a chave.</li>
+          <li>Avise no Discord com o <b>ID do pedido</b>.</li>
+          <li>Staff aceita e entrega.</li>
+        </ol>
+      </div>
+    </div>
+
+    <footer>© Infinity Craft • Checkout</footer>
   </div>
 
-  <input id="nick" placeholder="Nick no Minecraft" />
-
-  <button onclick="confirmar()">Já paguei</button>
-
-  <div class="small">
-    Aguarde a confirmação de um staff para receber seus itens.
-  </div>
-</div>
-
-<script>
-  // ✅ Firebase (seu config)
-  const firebaseConfig = {
-    apiKey: "AIzaSyASk1w8w6YzIQhkbJh7xv5BJb8ZHmG7MxM",
-    authDomain: "multicraft-ea978.firebaseapp.com",
-    databaseURL: "https://multicraft-ea978-default-rtdb.firebaseio.com",
-    projectId: "multicraft-ea978",
-    storageBucket: "multicraft-ea978.firebasestorage.app",
-    messagingSenderId: "587079793250",
-    appId: "1:587079793250:web:21d3fb74ae55eb6f5eef3b"
-  };
-
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  // ✅ Webhook PRIVADO (pendente)
-  const webhookPendente = "https://discord.com/api/webhooks/1460447479563682012/ZwXCxogPkp2EBYQGE7--VVY9OFS7Ma7-APSRoVQFM0JbCrQu-ufUkfwTMRwdtiXoZo_G";
-
-  // ✅ Mantém igual (pega kit/valor do localStorage, como seu index faz)
-  const kit = localStorage.getItem("kit") || "-";
-  const valor = localStorage.getItem("valor") || "-";
-  document.getElementById("kit").innerText = kit;
-  document.getElementById("valor").innerText = valor;
-
-  async function confirmar(){
-    const nick = document.getElementById("nick").value.trim();
-
-    if (!nick) {
-      alert("Digite seu nick!");
-      return;
-    }
-    if (kit === "-" || valor === "-") {
-      alert("Volte para a loja e escolha um kit.");
-      return;
-    }
-
-    // ✅ cria compra central no Firebase (aparece no seu admin em qualquer PC/celular)
-    const id = db.ref("compras").push().key;
-
-    const compra = {
-      nick,
-      kit,
-      valor,
-      status: "pendente",
-      createdAt: Date.now()
-    };
-
-    await db.ref("compras/" + id).set(compra);
-
-    // ✅ avisa no Discord privado
-    fetch(webhookPendente, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content:
-          "🟡 **COMPRA PENDENTE**\n" +
-          "👤 Nick: " + nick + "\n" +
-          "📦 Kit: " + kit + "\n" +
-          "💰 Valor: R$" + valor + "\n" +
-          "🆔 ID: " + id
-      })
-    }).catch(()=>{});
-
-    alert("Pagamento enviado! Aguarde a confirmação de um staff.");
-  }
-
-  // deixa a função global pro onclick
-  window.confirmar = confirmar;
-</script>
-
+  <script type="module" src="assets/pagamentos.js"></script>
 </body>
 </html>
